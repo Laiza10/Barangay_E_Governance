@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Announcements{% endblock %}
+
+{% block content %}
+<h1 class="mb-4 fw-bold">Announcements</h1>
+
+{% if announcements %}
+    <div class="row g-4">
+        {% for ann in announcements %}
+        <div class="col-md-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-info text-white fw-bold">
+                    {{ ann.title }}
+                </div>
+                <div class="card-body">
+                    <p>{{ ann.content|linebreaks }}</p>
+                    <small class="text-muted">Posted on: {{ ann.date_posted|date:"M d, Y H:i" }}</small>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p class="text-muted">No announcements yet.</p>
+{% endif %}
+{% endblock %}

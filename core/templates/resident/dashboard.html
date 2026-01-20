@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}Resident Dashboard{% endblock %}
+
+{% block content %}
+<h1 class="mb-4 fw-bold">Welcome, {{ user.username }}!</h1>
+
+<div class="row g-4">
+    <!-- Complaints -->
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white fw-bold">
+                My Complaints
+            </div>
+            <div class="card-body">
+                {% if complaints %}
+                    <ul class="list-group list-group-flush">
+                        {% for complaint in complaints %}
+                        <li class="list-group-item">
+                            <strong>{{ complaint.subject }}</strong> 
+                            <span class="text-muted">({{ complaint.status }})</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted">No complaints submitted yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Document Requests -->
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-success text-white fw-bold">
+                My Document Requests
+            </div>
+            <div class="card-body">
+                {% if requests %}
+                    <ul class="list-group list-group-flush">
+                        {% for req in requests %}
+                        <li class="list-group-item">
+                            <strong>{{ req.document_type }}</strong> 
+                            <span class="text-muted">({{ req.status }})</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted">No document requests yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-4">
+    <a href="{% url 'submit_complaint' %}" class="btn btn-primary me-2">Submit Complaint</a>
+    <a href="{% url 'request_document' %}" class="btn btn-success me-2">Request Document</a>
+    <a href="{% url 'view_announcements' %}" class="btn btn-info text-white">View Announcements</a>
+</div>
+
+{% endblock %}

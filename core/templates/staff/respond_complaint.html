@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Respond Complaint{% endblock %}
+
+{% block content %}
+<h1 class="mb-4 fw-bold">Respond to Complaint</h1>
+
+<div class="card shadow-sm p-4">
+    <p><strong>Subject:</strong> {{ complaint.subject }}</p>
+    <p><strong>Description:</strong> {{ complaint.description }}</p>
+    <p><strong>Status:</strong> {{ complaint.status }}</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="response" class="form-label fw-bold">Your Response</label>
+            <textarea name="response" id="response" rows="5" class="form-control" placeholder="Type your response here..." required>{{ complaint.response }}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary fw-bold">Send Response</button>
+        <a href="{% url 'staff_dashboard' %}" class="btn btn-secondary fw-bold ms-2">Cancel</a>
+    </form>
+</div>
+{% endblock %}

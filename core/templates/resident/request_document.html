@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Request Document{% endblock %}
+
+{% block content %}
+<h1 class="mb-4 fw-bold">Request Document</h1>
+
+<div class="card shadow-sm p-4">
+    <form method="POST">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="mb-3">
+                <label class="form-label fw-bold">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <div class="text-danger small">{{ field.errors }}</div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-success fw-bold">Submit Request</button>
+        <a href="{% url 'resident_dashboard' %}" class="btn btn-secondary fw-bold ms-2">Cancel</a>
+    </form>
+</div>
+{% endblock %}

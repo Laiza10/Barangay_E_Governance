@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %}Staff Dashboard{% endblock %}
+
+{% block content %}
+<h1 class="mb-4 fw-bold">Welcome, {{ user.username }} (Staff)</h1>
+
+<div class="row g-4">
+    <!-- Complaints -->
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-warning text-dark fw-bold">
+                Complaints
+            </div>
+            <div class="card-body">
+                {% if complaints %}
+                    <ul class="list-group list-group-flush">
+                        {% for complaint in complaints %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>{{ complaint.subject }}</strong> 
+                                <span class="text-muted">({{ complaint.status }})</span>
+                            </div>
+                            <a href="{% url 'respond_complaint' complaint.id %}" class="btn btn-sm btn-primary">Respond</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted">No complaints yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Document Requests -->
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-success text-white fw-bold">
+                Document Requests
+            </div>
+            <div class="card-body">
+                {% if requests %}
+                    <ul class="list-group list-group-flush">
+                        {% for req in requests %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>{{ req.document_type }}</strong> 
+                                <span class="text-muted">({{ req.status }})</span>
+                            </div>
+                            <div>
+                                {% if req.status != "Approved" %}
+                                <a href="{% url 'update_request_status' req.id 'Approved' %}" class="btn btn-sm btn-success">Approve</a>
+                                {% endif %}
+                                {% if req.status != "Denied" %}
+                                <a href="{% url 'update_request_status' req.id 'Denied' %}" class="btn btn-sm btn-danger">Deny</a>
+                                {% endif %}
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted">No document requests yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-4">
+    <a href="{% url 'add_announcement' %}" class="btn btn-info text-white fw-bold me-2">Add Announcement</a>
+</div>
+{% endblock %}
